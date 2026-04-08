@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import MyContext from '../contexts/MyContext';
+import './Myorders.css'; // Đảm bảo bạn tạo file CSS này
 
 class Myorders extends Component {
   static contextType = MyContext;
@@ -16,117 +17,107 @@ class Myorders extends Component {
 
   componentDidMount() {
     if (this.context.customer) {
-      const customerId = this.context.customer._id;
-      this.apiGetOrdersByCustID(customerId);
+      this.apiGetOrdersByCustID(this.context.customer._id);
     }
   }
 
-  // ================= EVENT HANDLERS =================
   trItemClick = (order) => {
     this.setState({ order });
   };
 
-  // ================= API =================
   apiGetOrdersByCustID(customerId) {
-    const config = {
-      headers: { 'x-access-token': this.context.token }
-    };
-
-    axios
-      .get(`/api/customer/orders/customer/${customerId}`, config)
-      .then((res) => {
-        this.setState({ orders: res.data });
-      });
+    const config = { headers: { 'x-access-token': this.context.token } };
+    axios.get(`/api/customer/orders/customer/${customerId}`, config).then((res) => {
+      this.setState({ orders: res.data });
+    });
   }
 
   render() {
-    // chưa login
-    if (this.context.token === '') {
-      return <Navigate replace to="/login" />;
-    }
-
+    if (this.context.token === '') return <Navigate replace to="/login" />;
     const { orders, order } = this.state;
 
-    // danh sách orders
     const orderRows = orders.map((item) => (
-      <tr
-        key={item._id}
-        className="datatable"
-        onClick={() => this.trItemClick(item)}
-      >
-        <td>{item._id}</td>
-        <td>{new Date(item.cdate).toLocaleString()}</td>
-        <td>{item.customer.name}</td>
-        <td>{item.customer.phone}</td>
-        <td>{item.total}</td>
-        <td>{item.status}</td>
+      <tr key={item._id} className={`order-row ${order?._id === item._id ? 'active' : ''}`} onClick={() => this.trItemClick(item)}>
+        <td><span className="order-id-badge">{item._id.substring(item._id.length - 6)}</span></td>
+        <td>{new Date(item.cdate).toLocaleDateString()}</td>
+        <td className="text-bold">{item.total.toLocaleString()} đ</td>
+        <td>
+          <span className={`status-pill ${item.status.toLowerCase()}`}>
+            {item.status}
+          </span>
+        </td>
       </tr>
     ));
 
-    // chi tiết order
-    const itemRows = order
-      ? order.items.map((item, index) => (
-          <tr key={item.product._id} className="datatable">
-            <td>{index + 1}</td>
-            <td>{item.product._id}</td>
-            <td>{item.product.name}</td>
-            <td>
-              <img
-                src={`data:image/jpg;base64,${item.product.image}`}
-                width="70"
-                height="70"
-                alt=""
-              />
-            </td>
-            <td>{item.product.price}</td>
-            <td>{item.quantity}</td>
-            <td>{item.product.price * item.quantity}</td>
-          </tr>
-        ))
-      : null;
+    const itemRows = order?.items.map((item, index) => (
+      <tr key={item.product._id} className="detail-row">
+        <td>{index + 1}</td>
+        <td>
+          <div className="product-cell">
+            <img src={`data:image/jpg;base64,${item.product.image}`} alt="" className="prod-img-mini" />
+            <span>{item.product.name}</span>
+          </div>
+        </td>
+        <td>{item.product.price.toLocaleString()}</td>
+        <td>x{item.quantity}</td>
+        <td className="text-bold">{(item.product.price * item.quantity).toLocaleString()}</td>
+      </tr>
+    ));
 
     return (
-      <div>
-        {/* ORDER LIST */}
-        <div className="align-center">
-          <h2 className="text-center">ORDER LIST</h2>
-          <table className="datatable" border="1">
-            <tbody>
-              <tr className="datatable">
-                <th>ID</th>
-                <th>Creation date</th>
-                <th>Cust.name</th>
-                <th>Cust.phone</th>
-                <th>Total</th>
-                <th>Status</th>
-              </tr>
-              {orderRows}
-            </tbody>
-          </table>
-        </div>
-
-        {/* ORDER DETAIL */}
-        {order ? (
-          <div className="align-center">
-            <h2 className="text-center">ORDER DETAIL</h2>
-            <table className="datatable" border="1">
-              <tbody>
-                <tr className="datatable">
-                  <th>No.</th>
-                  <th>Prod.ID</th>
-                  <th>Prod.name</th>
-                  <th>Image</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Amount</th>
-                </tr>
-                {itemRows}
-              </tbody>
-            </table>
+      <div className="orders-container">
+        <div className="orders-layout">
+          {/* CỘT TRÁI: DANH SÁCH */}
+          <div className="orders-list-section">
+            <h2 className="section-title">Purchase History</h2>
+            <div className="table-card">
+              <table className="custom-table">
+                <thead>
+                  <tr>
+                    <th>ID (Short)</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>{orderRows}</tbody>
+              </table>
+            </div>
           </div>
-        ) : (
-          <div />
-        )}
+
+          {/* CỘT PHẢI: CHI TIẾT */}
+          <div className="orders-detail-section">
+            <h2 className="section-title">Order Detail</h2>
+            {order ? (
+              <div className="detail-card">
+                <div className="detail-header">
+                  <p><strong>Customer:</strong> {order.customer.name}</p>
+                  <p><strong>Phone:</strong> {order.customer.phone}</p>
+                </div>
+                <table className="custom-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Product</th>
+                      <th>Price</th>
+                      <th>Qty</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>{itemRows}</tbody>
+                </table>
+                <div className="detail-footer">
+                   <span>Grand Total:</span>
+                   <span className="final-price">{order.total.toLocaleString()} đ</span>
+                </div>
+              </div>
+            ) : (
+              <div className="empty-detail">
+                <p>Select an order on the left to see details</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
