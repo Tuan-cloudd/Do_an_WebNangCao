@@ -1,52 +1,57 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import MyContext from '../contexts/MyContext';
+import './Inform.css'; // Tạo file CSS riêng
 
 class Inform extends Component {
-  static contextType = MyContext; // using this.context to access global state
+  static contextType = MyContext;
 
   render() {
-    const { token, customer } = this.context;
+    const { token, customer, mycart } = this.context;
 
     return (
-      <div className="border-bottom">
+      <nav className="inform-navbar">
+        <div className="inform-container">
+          
+          {/* LEFT: Auth Links & Profile */}
+          <div className="auth-section">
+            {token === '' ? (
+              <div className="auth-group">
+                <Link to="/login" className="nav-link">Login</Link>
+                <Link to="/signup" className="nav-link btn-signup-small">Sign Up</Link>
+                <Link to="/active" className="nav-link">Active</Link>
+              </div>
+            ) : (
+              <div className="auth-group">
+                <span className="welcome-text">Hello, <b>{customer.name}</b></span>
+                <Link to="/myprofile" className="nav-link">My Profile</Link>
+                <Link to="/myorders" className="nav-link">My Orders</Link>
+                <Link to="/home" className="nav-link logout-link" onClick={() => this.lnkLogoutClick()}>
+                  Logout
+                </Link>
+              </div>
+            )}
+          </div>
 
-        {/* LEFT MENU */}
-        <div className="float-left">
-          {token === '' ? (
-            <div>
-              <Link to="/login">Login</Link> |{' '}
-              <Link to="/signup">Sign-up</Link> |{' '}
-              <Link to="/active">Active</Link>
-              
-            </div>
-          ) : (
-            <div>
-              Hello <b>{customer.name}</b> |{' '}
-              <Link to="/home" onClick={() => this.lnkLogoutClick()}>
-                Logout
-              </Link>{' '}
-              | <Link to="/myprofile">My profile</Link> | <Link to='/myorders'>My orders</Link>
-            </div>
-          )}
+          {/* RIGHT: Cart */}
+          <div className="cart-section">
+            <Link to="/mycart" className="cart-link">
+              <div className="cart-icon-wrapper">
+                <span className="cart-label">My Cart</span>
+                <span className="cart-badge">{mycart.length}</span>
+              </div>
+            </Link>
+          </div>
+
         </div>
-
-        {/* RIGHT MENU */}
-        <div className="float-right">
-          <Link to='/mycart'>My cart</Link> have <b>{this.context.mycart.length}</b> items
-        </div>
-
-        <div className="float-clear" />
-      </div>
+      </nav>
     );
   }
-
-  // ================= EVENT HANDLERS =================
 
   lnkLogoutClick() {
     this.context.setToken('');
     this.context.setCustomer(null);
-    this.context.setMycart([])
+    this.context.setMycart([]);
   }
 }
 

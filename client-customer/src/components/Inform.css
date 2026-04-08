@@ -1,0 +1,89 @@
+.inform-navbar {
+  background-color: #ffffff;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+
+.inform-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between; /* Đẩy 2 phần về 2 phía */
+  align-items: center;
+  padding: 0 20px;
+}
+
+/* Grouping Links */
+.auth-group {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Khoảng cách giữa các link thay cho dấu | */
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #5d2e1f; /* Màu nâu chủ đạo */
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #b66a3d; /* Màu cam khi hover */
+}
+
+.welcome-text {
+  color: #777;
+  margin-right: 10px;
+}
+
+/* Nút Sign Up nhỏ nhấn mạnh */
+.btn-signup-small {
+  background-color: #5d2e1f;
+  color: white !important;
+  padding: 6px 15px;
+  border-radius: 20px;
+}
+
+.logout-link {
+  color: #c0392b; /* Màu đỏ nhẹ cho Logout */
+}
+
+/* Cart Style */
+.cart-link {
+  text-decoration: none;
+  color: #5d2e1f;
+}
+
+.cart-icon-wrapper {
+  display: flex;
+  align-items: center;
+  background: #fdf2f0; /* Nền hồng cam nhạt */
+  padding: 8px 15px;
+  border-radius: 25px;
+  border: 1px solid #f9e1dc;
+  transition: all 0.3s;
+}
+
+.cart-icon-wrapper:hover {
+  background: #f9e1dc;
+}
+
+.cart-label {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.cart-badge {
+  background-color: #b66a3d;
+  color: white;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+}
