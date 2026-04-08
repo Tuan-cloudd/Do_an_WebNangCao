@@ -1,0 +1,95 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 40px 20px;
+  background-color: #fdfdfd;
+}
+
+.profile-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+.profile-title {
+  font-family: "serif"; /* Playfair Display if possible */
+  color: #5d2e1f;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.profile-subtitle {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+}
+
+.profile-form {
+  text-align: left;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #b66a3d;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #444;
+  background-color: #fafafa;
+  transition: all 0.3s;
+  box-sizing: border-box; /* Quan trọng để input không bị tràn */
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #b66a3d;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(182, 106, 61, 0.1);
+}
+
+.btn-update-profile {
+  width: 100%;
+  background-color: #5d2e1f;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
+
+.btn-update-profile:hover {
+  background-color: #b66a3d;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(182, 106, 61, 0.2);
+}
+
+/* Hiệu ứng mượt khi mobile */
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 25px;
+  }
+}

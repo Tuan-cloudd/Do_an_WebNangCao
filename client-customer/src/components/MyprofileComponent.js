@@ -2,9 +2,10 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import MyContext from '../contexts/MyContext';
+import './Myprofile.css'; // Import file CSS mới
 
 class Myprofile extends Component {
-  static contextType = MyContext; // access global state
+  static contextType = MyContext;
 
   constructor(props) {
     super(props);
@@ -23,92 +24,71 @@ class Myprofile extends Component {
     const { txtUsername, txtPassword, txtName, txtPhone, txtEmail } = this.state;
 
     return (
-      <div className="align-center">
-        <h2 className="text-center">MY PROFILE</h2>
+      <div className="profile-container">
+        <div className="profile-card">
+          <h2 className="profile-title">My Profile</h2>
+          <p className="profile-subtitle">Update your personal information below</p>
 
-        <form>
-          <table className="align-center">
-            <tbody>
+          <form className="profile-form">
+            <div className="input-group">
+              <label>Username</label>
+              <input
+                type="text"
+                value={txtUsername}
+                onChange={(e) => this.setState({ txtUsername: e.target.value })}
+                placeholder="Your username"
+              />
+            </div>
 
-              <tr>
-                <td>Username</td>
-                <td>
-                  <input
-                    type="text"
-                    value={txtUsername}
-                    onChange={(e) =>
-                      this.setState({ txtUsername: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+            <div className="input-group">
+              <label>Password</label>
+              <input
+                type="password"
+                value={txtPassword}
+                onChange={(e) => this.setState({ txtPassword: e.target.value })}
+                placeholder="********"
+              />
+            </div>
 
-              <tr>
-                <td>Password</td>
-                <td>
-                  <input
-                    type="password"
-                    value={txtPassword}
-                    onChange={(e) =>
-                      this.setState({ txtPassword: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+            <div className="input-group">
+              <label>Full Name</label>
+              <input
+                type="text"
+                value={txtName}
+                onChange={(e) => this.setState({ txtName: e.target.value })}
+                placeholder="Enter your name"
+              />
+            </div>
 
-              <tr>
-                <td>Name</td>
-                <td>
-                  <input
-                    type="text"
-                    value={txtName}
-                    onChange={(e) =>
-                      this.setState({ txtName: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+            <div className="input-group">
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                value={txtPhone}
+                onChange={(e) => this.setState({ txtPhone: e.target.value })}
+                placeholder="090..."
+              />
+            </div>
 
-              <tr>
-                <td>Phone</td>
-                <td>
-                  <input
-                    type="tel"
-                    value={txtPhone}
-                    onChange={(e) =>
-                      this.setState({ txtPhone: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+            <div className="input-group">
+              <label>Email Address</label>
+              <input
+                type="email"
+                value={txtEmail}
+                onChange={(e) => this.setState({ txtEmail: e.target.value })}
+                placeholder="example@mail.com"
+              />
+            </div>
 
-              <tr>
-                <td>Email</td>
-                <td>
-                  <input
-                    type="email"
-                    value={txtEmail}
-                    onChange={(e) =>
-                      this.setState({ txtEmail: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
-
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    type="submit"
-                    value="UPDATE"
-                    onClick={(e) => this.btnUpdateClick(e)}
-                  />
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-        </form>
+            <button 
+              type="submit" 
+              className="btn-update-profile" 
+              onClick={(e) => this.btnUpdateClick(e)}
+            >
+              Update Profile
+            </button>
+          </form>
+        </div>
       </div>
     );
   }
@@ -116,7 +96,6 @@ class Myprofile extends Component {
   componentDidMount() {
     if (this.context.customer) {
       const { username, password, name, phone, email } = this.context.customer;
-
       this.setState({
         txtUsername: username,
         txtPassword: password,
@@ -127,13 +106,9 @@ class Myprofile extends Component {
     }
   }
 
-  // ================= EVENT HANDLERS =================
-
   btnUpdateClick(e) {
     e.preventDefault();
-
     const { txtUsername, txtPassword, txtName, txtPhone, txtEmail } = this.state;
-
     if (txtUsername && txtPassword && txtName && txtPhone && txtEmail) {
       const customer = {
         username: txtUsername,
@@ -142,32 +117,22 @@ class Myprofile extends Component {
         phone: txtPhone,
         email: txtEmail
       };
-
       this.apiPutCustomer(this.context.customer._id, customer);
     } else {
-      alert('Please input username and password and name and phone and email');
+      alert('Please fill in all fields');
     }
   }
 
-  // ================= API =================
-
   apiPutCustomer(id, customer) {
-    const config = {
-      headers: { 'x-access-token': this.context.token }
-    };
-
-    axios
-      .put('/api/customer/customers/' + id, customer, config)
-      .then((res) => {
-        const result = res.data;
-
-        if (result) {
-          alert('OK BABY!');
-          this.context.setCustomer(result);
-        } else {
-          alert('SORRY BABY!');
-        }
-      });
+    const config = { headers: { 'x-access-token': this.context.token } };
+    axios.put('/api/customer/customers/' + id, customer, config).then((res) => {
+      if (res.data) {
+        alert('Profile updated successfully! ✨');
+        this.context.setCustomer(res.data);
+      } else {
+        alert('Update failed, please try again.');
+      }
+    });
   }
 }
 
