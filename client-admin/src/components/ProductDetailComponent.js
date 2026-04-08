@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
+// import './ProductDetail.css';
 
 class ProductDetail extends Component {
   static contextType = MyContext; // dùng this.context để truy cập global state

@@ -1,0 +1,84 @@
+/* ProductDetail.css */
+
+/* Container chính */
+.float-right {
+  float: right;
+  width: 45%;
+  margin-left: 2%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* Heading */
+.float-right h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+/* Table */
+.float-right table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.float-right td,
+.float-right th {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* Input fields */
+.float-right input[type="text"],
+.float-right input[type="number"],
+.float-right select,
+.float-right input[type="file"] {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Buttons */
+.float-right input[type="submit"] {
+  padding: 6px 12px;
+  margin-right: 5px;
+  font-size: 14px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.float-right input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Image preview */
+.float-right img {
+  display: block;
+  margin: 10px auto;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+/* Responsive: khi màn hình nhỏ */
+@media screen and (max-width: 1024px) {
+  .float-right {
+    width: 100%;
+    float: none;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+}
