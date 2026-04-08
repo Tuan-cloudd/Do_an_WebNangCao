@@ -1,0 +1,133 @@
+:root {
+  --primary-brown: #5d2e1f;
+  --accent-orange: #b66a3d;
+  --bg-cream: #f4f4f4;
+  --text-body: #7a7a7a;
+}
+
+.home-container {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--primary-brown);
+  background-color: #fff;
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  align-items: center;
+  padding: 80px 10%;
+  background-color: #f9f9f9;
+  gap: 50px;
+}
+
+.hero-content {
+  flex: 1;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-family: "serif"; /* Nên dùng font 'Playfair Display' nếu có */
+  color: var(--primary-brown);
+  margin-bottom: 20px;
+  line-height: 1.1;
+}
+
+.hero-text {
+  color: var(--text-body);
+  max-width: 400px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.btn-checkout {
+  background-color: var(--accent-orange);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.hero-image img {
+  max-width: 500px;
+  border-radius: 100px; /* Tạo hình dáng oval cho cái khay đá mable */
+}
+/* Container chứa các sản phẩm */
+.product-grid {
+  display: flex; /* Sử dụng flexbox */
+  flex-wrap: wrap; /* Cho phép xuống hàng nếu quá nhiều sản phẩm */
+  justify-content: center; /* Căn giữa các sản phẩm */
+  gap: 20px; /* Khoảng cách giữa các thẻ sản phẩm */
+  padding: 20px;
+}
+
+/* Kích thước của từng thẻ sản phẩm */
+.product-card {
+  background-color: #f1f1f1;
+  border-radius: 30px;
+  padding: 30px;
+  width: 250px; /* Cố định chiều rộng để các thẻ bằng nhau */
+  text-align: center;
+  flex: 0 1 auto; /* Không cho phép thẻ tự co giãn quá mức */
+}
+
+.product-image-wrapper img {
+  width: 100%; /* Ảnh rộng bằng thẻ cha */
+  height: 200px; /* Cố định chiều cao ảnh */
+  object-fit: contain; /* Giữ nguyên tỉ lệ ảnh không bị móp */
+  margin-bottom: 15px;
+}
+
+/* Signatures Section */
+.signatures-section {
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Product Card */
+.product-card {
+  background-color: var(--bg-cream);
+  border-radius: 20px;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: var(--primary-brown);
+}
+
+.product-description {
+  font-size: 0.85rem;
+  color: var(--text-body);
+  margin-bottom: 10px;
+}
+
+.product-link {
+  text-decoration: none;
+  color: inherit;
+}

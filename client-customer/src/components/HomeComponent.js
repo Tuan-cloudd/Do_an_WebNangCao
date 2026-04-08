@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import './Home.css'; // Đảm bảo bạn tạo file CSS này
 
 class Home extends Component {
   constructor(props) {
@@ -12,65 +13,50 @@ class Home extends Component {
   }
 
   render() {
-    const newprods = this.state.newprods.map((item) => {
-      return (
-        <div key={item._id} className="inline">
-          <figure>
-            <Link to={`/product/${item._id}`}>
-              <img
-                src={"data:image/jpg;base64," + item.image}
-                width="300px"
-                height="300px"
-                alt=""
-              />
-            </Link>
-            <figcaption className="text-center">
-              {item.name}
-              <br />
-              Price: {item.price}
-            </figcaption>
-          </figure>
-        </div>
-      );
-    });
-
     const hotprods = this.state.hotprods.map((item) => {
       return (
-        <div key={item._id} className="inline">
-          <figure>
-            <Link to={`/product/${item._id}`}>
+        <div key={item._id} className="product-card">
+          <Link to={`/product/${item._id}`} className="product-link">
+            <div className="product-image-wrapper">
               <img
                 src={"data:image/jpg;base64," + item.image}
-                width="300px"
-                height="300px"
-                alt="wwwwww"
+                alt={item.name}
               />
-            </Link>
-            <figcaption className="text-center">
-              {item.name}
-              <br />
-              Price: {item.price}
-            </figcaption>
-          </figure>
+            </div>
+            <div className="product-info">
+              <h3 className="product-name">{item.name}</h3>
+              <p className="product-description">Lorem ipsum dolor sit amet, consectetuer adipiscing.</p>
+              {/* <span className="product-price">${item.price}</span> */}
+            </div>
+          </Link>
         </div>
       );
     });
 
     return (
-      <div>
-        <div className="align-center">
-          <h2 className="text-center">NEW PRODUCTS</h2>
-          {newprods}
-        </div>
-        
-        {this.state.hotprods.length > 0 ? (
-          <div className="align-center">
-            <h2 className="text-center">HOT PRODUCTS</h2>
+      <div className="home-container">
+        {/* HERO SECTION */}
+        <section className="hero-section">
+          <div className="hero-content">
+            <h1 className="hero-title">Take a <br/><span>Croissant</span></h1>
+            <p className="hero-text">
+              Lorem ipsum Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam 
+              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam.
+            </p>
+            <button className="btn-checkout">Checkout Now</button>
+          </div>
+          <div className="hero-image">
+            <img src="/path-to-your-croissant-hero-image.png" alt="Croissants" />
+          </div>
+        </section>
+
+        {/* SIGNATURES SECTION */}
+        <section className="signatures-section">
+          <h2 className="section-title">Our Signatures</h2>
+          <div className="product-grid">
             {hotprods}
           </div>
-        ) : (
-          <div />
-        )}
+        </section>
       </div>
     );
   }
@@ -80,18 +66,15 @@ class Home extends Component {
     this.apiGetHotProducts();
   }
 
-  // apis
   apiGetNewProducts() {
     axios.get('/api/customer/products/new').then((res) => {
-      const result = res.data;
-      this.setState({ newprods: result });
+      this.setState({ newprods: res.data });
     });
   }
 
   apiGetHotProducts() {
     axios.get('/api/customer/products/hot').then((res) => {
-      const result = res.data;
-      this.setState({ hotprods: result });
+      this.setState({ hotprods: res.data });
     });
   }
 }
