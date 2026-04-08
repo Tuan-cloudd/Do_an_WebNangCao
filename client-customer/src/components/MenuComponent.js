@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import withRouter from '../utils/withRouter';
+import './Menu.css'; // Import file CSS mới
 
 class Menu extends Component {
   constructor(props) {
@@ -15,8 +16,8 @@ class Menu extends Component {
   render() {
     const cates = this.state.categories.map((item) => {
       return (
-        <li key={item._id} className="menu">
-          <Link to={'/product/category/' + item._id}>
+        <li key={item._id} className="nav-item">
+          <Link to={'/product/category/' + item._id} className="nav-link">
             {item.name}
           </Link>
         </li>
@@ -24,37 +25,41 @@ class Menu extends Component {
     });
 
     return (
-      <div className="border-bottom">
-        <div className="float-left">
-          <ul className="menu">
-            <li className="menu">
-              <Link to="/home">Home</Link>
-            </li>
-            {cates}
-          </ul>
+      <div className="main-menu-container">
+        <div className="menu-wrapper">
+          {/* LOGO HOẶC HOME */}
+          <div className="menu-logo">
+            <Link to="/home" className="logo-text">Love<span>Choux</span></Link>
+          </div>
+
+          {/* NAVIGATION LINKS */}
+          <nav className="menu-nav">
+            <ul className="nav-list">
+              <li className="nav-item">
+                <Link to="/home" className="nav-link">Home</Link>
+              </li>
+              {cates}
+            </ul>
+          </nav>
+
+          {/* SEARCH BOX */}
+          <div className="menu-search">
+            <form className="search-form" onSubmit={(e) => this.btnSearchClick(e)}>
+              <input
+                type="search"
+                placeholder="Search pastries..."
+                className="search-input"
+                value={this.state.txtKeyword}
+                onChange={(e) => {
+                  this.setState({ txtKeyword: e.target.value });
+                }}
+              />
+              <button type="submit" className="search-button">
+                <i className="fa fa-search"></i> {/* Bạn có thể dùng icon hoặc chữ SEARCH */}
+              </button>
+            </form>
+          </div>
         </div>
-
-        <div className="float-right">
-          <form className="search">
-            <input
-              type="search"
-              placeholder="Enter keyword"
-              className="keyword"
-              value={this.state.txtKeyword}
-              onChange={(e) => {
-                this.setState({ txtKeyword: e.target.value });
-              }}
-            />
-
-            <input
-              type="submit"
-              value="SEARCH"
-              onClick={(e) => this.btnSearchClick(e)}
-            />
-          </form>
-        </div>
-
-        <div className="float-clear" />
       </div>
     );
   }
@@ -63,18 +68,17 @@ class Menu extends Component {
     this.apiGetCategories();
   }
 
-  // apis
   apiGetCategories() {
     axios.get('/api/customer/categories').then((res) => {
-      const result = res.data;
-      this.setState({ categories: result });
+      this.setState({ categories: res.data });
     });
   }
 
-  // event-handlers
   btnSearchClick(e) {
     e.preventDefault();
-    this.props.navigate('/product/search/' + this.state.txtKeyword);
+    if (this.state.txtKeyword.trim()) {
+      this.props.navigate('/product/search/' + this.state.txtKeyword);
+    }
   }
 }
 
