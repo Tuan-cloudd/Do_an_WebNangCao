@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
 
 class Login extends Component {
-  static contextType = MyContext; // using this.context to access global state
+  static contextType = MyContext;
 
   constructor(props) {
     super(props);
@@ -16,51 +16,42 @@ class Login extends Component {
   render() {
     if (this.context.token === '') {
       return (
-        <div className="align-valign-center">
-          <h2 className="text-center">ADMIN LOGIN</h2>
+        <div style={styles.container}>
+          <div style={styles.card}>
+            <h2 style={styles.title}>ADMIN LOGIN</h2>
 
-          <form>
-            <table className="align-center">
-              <tbody>
-                <tr>
-                  <td>Username</td>
-                  <td>
-                    <input
-                      type="text"
-                      value={this.state.txtUsername}
-                      onChange={(e) =>
-                        this.setState({ txtUsername: e.target.value })
-                      }
-                    />
-                  </td>
-                </tr>
+            <form onSubmit={(e) => this.btnLoginClick(e)}>
+              <div style={styles.formGroup}>
+                <label>Username</label>
+                <input
+                  type="text"
+                  placeholder="Enter username"
+                  value={this.state.txtUsername}
+                  onChange={(e) =>
+                    this.setState({ txtUsername: e.target.value })
+                  }
+                  style={styles.input}
+                />
+              </div>
 
-                <tr>
-                  <td>Password</td>
-                  <td>
-                    <input
-                      type="password"
-                      value={this.state.txtPassword}
-                      onChange={(e) =>
-                        this.setState({ txtPassword: e.target.value })
-                      }
-                    />
-                  </td>
-                </tr>
+              <div style={styles.formGroup}>
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="Enter password"
+                  value={this.state.txtPassword}
+                  onChange={(e) =>
+                    this.setState({ txtPassword: e.target.value })
+                  }
+                  style={styles.input}
+                />
+              </div>
 
-                <tr>
-                  <td></td>
-                  <td>
-                    <input
-                      type="submit"
-                      value="LOGIN"
-                      onClick={(e) => this.btnLoginClick(e)}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </form>
+              <button type="submit" style={styles.button}>
+                LOGIN
+              </button>
+            </form>
+          </div>
         </div>
       );
     }
@@ -68,7 +59,6 @@ class Login extends Component {
     return <div />;
   }
 
-  // event-handlers
   btnLoginClick(e) {
     e.preventDefault();
 
@@ -85,7 +75,6 @@ class Login extends Component {
     }
   }
 
-  // apis
   apiLogin(account) {
     axios.post('/api/admin/login', account).then((res) => {
       const result = res.data;
@@ -99,5 +88,52 @@ class Login extends Component {
     });
   }
 }
+
+// 🎨 STYLE OBJECT
+const styles = {
+  container: {
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'linear-gradient(135deg, #667eea, #764ba2)'
+  },
+  card: {
+    background: '#fff',
+    padding: '40px',
+    borderRadius: '12px',
+    boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
+    width: '320px'
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: '20px'
+  },
+  formGroup: {
+    marginBottom: '15px',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  input: {
+    padding: '10px',
+    borderRadius: '6px',
+    border: '1px solid #ccc',
+    marginTop: '5px',
+    outline: 'none',
+    fontSize: '14px'
+  },
+  button: {
+    width: '100%',
+    padding: '10px',
+    borderRadius: '6px',
+    border: 'none',
+    background: '#667eea',
+    color: '#fff',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    marginTop: '10px',
+    transition: '0.3s'
+  }
+};
 
 export default Login;

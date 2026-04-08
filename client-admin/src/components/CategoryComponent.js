@@ -4,7 +4,7 @@ import MyContext from '../contexts/MyContext';
 import CategoryDetail from './CategoryDetailComponent';
 
 class Category extends Component {
-  static contextType = MyContext; // dùng this.context để lấy global state
+  static contextType = MyContext;
 
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ class Category extends Component {
     const cates = this.state.categories.map((item) => (
       <tr
         key={item._id}
-        className="datatable"
+        style={styles.row}
         onClick={() => this.trItemClick(item)}
       >
         <td>{item._id}</td>
@@ -31,27 +31,27 @@ class Category extends Component {
     ));
 
     return (
-      <div>
-        <div className="float-left">
-          <h2 className="text-center">CATEGORY LIST</h2>
-          <table className="datatable" border="1">
-            <tbody>
-              <tr className="datatable">
+      <div style={styles.container}>
+        <div style={styles.leftPanel}>
+          <h2 style={styles.title}>CATEGORY LIST</h2>
+          <table style={styles.table}>
+            <thead>
+              <tr>
                 <th>ID</th>
                 <th>Name</th>
               </tr>
-              {cates}
-            </tbody>
+            </thead>
+            <tbody>{cates}</tbody>
           </table>
         </div>
 
-        <div className="inline" />
-        <CategoryDetail
-          item={this.state.itemSelected}
-          updateCategories={this.updateCategories}
-          token={this.context.token}
-        />
-        <div className="float-clear" />
+        <div style={styles.rightPanel}>
+          <CategoryDetail
+            item={this.state.itemSelected}
+            updateCategories={this.updateCategories}
+            token={this.context.token}
+          />
+        </div>
       </div>
     );
   }
@@ -76,12 +76,49 @@ class Category extends Component {
         console.error('Error loading categories:', error);
       });
   }
-   //  Hàm cho component con gọi ngược lên
+
   updateCategories = (categories) => {
     this.setState({ categories: categories });
   };
-
 }
 
+// 🎨 STYLE
+const styles = {
+  container: {
+    display: 'flex',
+    padding: '20px',
+    background: '#f4f6f9',
+    minHeight: '100vh'
+  },
+  leftPanel: {
+    flex: 1,
+    marginRight: '20px',
+    background: '#fff',
+    padding: '20px',
+    borderRadius: '12px',
+    boxShadow: '0 5px 15px rgba(0,0,0,0.1)'
+  },
+  rightPanel: {
+    flex: 1,
+    background: '#fff',
+    padding: '20px',
+    borderRadius: '12px',
+    boxShadow: '0 5px 15px rgba(0,0,0,0.1)'
+  },
+  title: {
+    marginBottom: '15px',
+    textAlign: 'center'
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse'
+  },
+  row: {
+    cursor: 'pointer',
+    transition: '0.2s',
+    textAlign: 'center',
+    borderBottom: '1px solid #ddd'
+  }
+};
 
 export default Category;

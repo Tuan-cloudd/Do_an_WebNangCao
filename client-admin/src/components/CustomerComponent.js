@@ -8,9 +8,7 @@ class Customer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      customers: [],
-      orders: [],
-      order: null
+      customers: []
     };
   }
 
@@ -22,74 +20,73 @@ class Customer extends Component {
     const { customers } = this.state;
 
     const customerRows = customers.map((item) => (
-      <tr key={item._id} className="datatable">
+      <tr key={item._id} style={styles.row}>
         <td>{item._id}</td>
         <td>{item.username}</td>
         <td>{item.password}</td>
         <td>{item.name}</td>
         <td>{item.phone}</td>
         <td>{item.email}</td>
-        <td>{item.active}</td>
+        <td>
+          <span style={styles.status(item.active)}>
+            {item.active === 1 ? 'ACTIVE' : 'INACTIVE'}
+          </span>
+        </td>
         <td>
           {item.active === 0 ? (
-            <span
-              className="link"
+            <button
+              style={styles.emailBtn}
               onClick={() => this.lnkEmailClick(item)}
             >
               EMAIL
-            </span>
+            </button>
           ) : (
-            <span
-              className="link"
+            <button
+              style={styles.deactiveBtn}
               onClick={() => this.lnkDeactiveClick(item)}
             >
               DEACTIVE
-            </span>
+            </button>
           )}
         </td>
       </tr>
     ));
 
     return (
-      <div className="align-center">
-        <h2 className="text-center">CUSTOMER LIST</h2>
+      <div style={styles.container}>
+        <div style={styles.card}>
+          <h2 style={styles.title}>CUSTOMER LIST</h2>
 
-        <table className="datatable" border="1">
-          <tbody>
-            <tr className="datatable">
-              <th>ID</th>
-              <th>Username</th>
-              <th>Password</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Active</th>
-              <th>Action</th>
-            </tr>
-
-            {customerRows}
-
-          </tbody>
-        </table>
+          <table style={styles.table}>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>{customerRows}</tbody>
+          </table>
+        </div>
       </div>
     );
   }
 
   // ================= EVENT =================
-
-  // DEACTIVE
   lnkDeactiveClick(item) {
     this.apiPutCustomerDeactive(item._id);
   }
 
-  // SEND EMAIL
   lnkEmailClick(item) {
     this.apiGetCustomerSendmail(item._id);
   }
 
   // ================= API =================
-
-  // GET CUSTOMERS
   apiGetCustomers() {
     const config = {
       headers: { 'x-access-token': this.context.token }
@@ -101,7 +98,6 @@ class Customer extends Component {
       });
   }
 
-  // PUT DEACTIVE
   apiPutCustomerDeactive(id) {
     const config = {
       headers: { 'x-access-token': this.context.token }
@@ -121,7 +117,6 @@ class Customer extends Component {
       });
   }
 
-  // GET SEND MAIL
   apiGetCustomerSendmail(id) {
     const config = {
       headers: { 'x-access-token': this.context.token }
@@ -137,5 +132,53 @@ class Customer extends Component {
       });
   }
 }
+
+// 🎨 STYLE
+const styles = {
+  container: {
+    padding: '20px',
+    background: '#f4f6f9',
+    minHeight: '100vh'
+  },
+  card: {
+    background: '#fff',
+    padding: '20px',
+    borderRadius: '12px',
+    boxShadow: '0 5px 15px rgba(0,0,0,0.1)'
+  },
+  title: {
+    marginBottom: '15px'
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse'
+  },
+  row: {
+    textAlign: 'center',
+    borderBottom: '1px solid #ddd'
+  },
+  status: (active) => ({
+    padding: '5px 10px',
+    borderRadius: '6px',
+    color: '#fff',
+    background: active === 1 ? '#28a745' : '#6c757d'
+  }),
+  emailBtn: {
+    background: '#007bff',
+    color: '#fff',
+    border: 'none',
+    padding: '6px 10px',
+    borderRadius: '5px',
+    cursor: 'pointer'
+  },
+  deactiveBtn: {
+    background: '#dc3545',
+    color: '#fff',
+    border: 'none',
+    padding: '6px 10px',
+    borderRadius: '5px',
+    cursor: 'pointer'
+  }
+};
 
 export default Customer;
