@@ -1,0 +1,123 @@
+.product-list-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.category-title {
+  font-family: serif;
+  font-size: 2rem;
+  color: #5d2e1f;
+  text-align: center;
+  margin-bottom: 40px;
+  text-transform: capitalize;
+}
+
+/* Cấu trúc lưới */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+/* Card sản phẩm */
+.product-card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(93, 46, 31, 0.1);
+}
+
+.product-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Hiệu ứng hình ảnh */
+.product-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* Tạo khung vuông 1:1 */
+  overflow: hidden;
+  background-color: #f9f9f9;
+}
+
+.product-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.1);
+}
+
+/* Lớp phủ khi hover */
+.view-detail-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(93, 46, 31, 0.4);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .view-detail-overlay {
+  opacity: 1;
+}
+
+/* Thông tin sản phẩm */
+.product-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.product-name {
+  font-size: 1.1rem;
+  margin: 0 0 10px 0;
+  color: #5d2e1f;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-price {
+  color: #b66a3d;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.currency {
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+.no-product {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 50px;
+}
