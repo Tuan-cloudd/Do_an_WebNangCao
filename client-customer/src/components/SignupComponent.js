@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import './Signup.css'; // Đảm bảo tạo file CSS này
 
 class Signup extends Component {
   constructor(props) {
@@ -15,122 +16,100 @@ class Signup extends Component {
 
   render() {
     return (
-      <div className="align-center">
-        <h2 className="text-center">SIGN-UP</h2>
+      <div className="signup-container">
+        <div className="signup-card">
+          <div className="signup-header">
+            <h2 className="signup-title">Join Us</h2>
+            <p className="signup-subtitle">Create an account to enjoy our sweet treats!</p>
+          </div>
 
-        <form>
-          <table className="align-center">
-            <tbody>
+          <form className="signup-form">
+            <div className="input-field">
+              <label>Username</label>
+              <input
+                type="text"
+                placeholder="Choose a username"
+                value={this.state.txtUsername}
+                onChange={(e) => this.setState({ txtUsername: e.target.value })}
+              />
+            </div>
 
-              <tr>
-                <td>Username</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtUsername}
-                    onChange={(e) => {
-                      this.setState({ txtUsername: e.target.value });
-                    }}
-                  />
-                </td>
-              </tr>
+            <div className="input-field">
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="Create a password"
+                value={this.state.txtPassword}
+                onChange={(e) => this.setState({ txtPassword: e.target.value })}
+              />
+            </div>
 
-              <tr>
-                <td>Password</td>
-                <td>
-                  <input
-                    type="password"
-                    value={this.state.txtPassword}
-                    onChange={(e) => {
-                      this.setState({ txtPassword: e.target.value });
-                    }}
-                  />
-                </td>
-              </tr>
+            <div className="input-field">
+              <label>Full Name</label>
+              <input
+                type="text"
+                placeholder="Enter your name"
+                value={this.state.txtName}
+                onChange={(e) => this.setState({ txtName: e.target.value })}
+              />
+            </div>
 
-              <tr>
-                <td>Name</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtName}
-                    onChange={(e) => {
-                      this.setState({ txtName: e.target.value });
-                    }}
-                  />
-                </td>
-              </tr>
+            <div className="input-field">
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                placeholder="e.g., 0901234567"
+                value={this.state.txtPhone}
+                onChange={(e) => this.setState({ txtPhone: e.target.value })}
+              />
+            </div>
 
-              <tr>
-                <td>Phone</td>
-                <td>
-                  <input
-                    type="tel"
-                    value={this.state.txtPhone}
-                    onChange={(e) => {
-                      this.setState({ txtPhone: e.target.value });
-                    }}
-                  />
-                </td>
-              </tr>
+            <div className="input-field">
+              <label>Email Address</label>
+              <input
+                type="email"
+                placeholder="example@mail.com"
+                value={this.state.txtEmail}
+                onChange={(e) => this.setState({ txtEmail: e.target.value })}
+              />
+            </div>
 
-              <tr>
-                <td>Email</td>
-                <td>
-                  <input
-                    type="email"
-                    value={this.state.txtEmail}
-                    onChange={(e) => {
-                      this.setState({ txtEmail: e.target.value });
-                    }}
-                  />
-                </td>
-              </tr>
-
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    type="submit"
-                    value="SIGN-UP"
-                    onClick={(e) => this.btnSignupClick(e)}
-                  />
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-        </form>
+            <button 
+              type="submit" 
+              className="btn-signup-submit"
+              onClick={(e) => this.btnSignupClick(e)}
+            >
+              Create Account
+            </button>
+          </form>
+          
+          <div className="signup-footer">
+            <p>Already have an account? <a href="/login">Log in</a></p>
+          </div>
+        </div>
       </div>
     );
   }
 
-  // event-handlers
+  // --- Logic API giữ nguyên ---
   btnSignupClick(e) {
     e.preventDefault();
+    const { txtUsername, txtPassword, txtName, txtPhone, txtEmail } = this.state;
 
-    const username = this.state.txtUsername;
-    const password = this.state.txtPassword;
-    const name = this.state.txtName;
-    const phone = this.state.txtPhone;
-    const email = this.state.txtEmail;
-
-    if (username && password && name && phone && email) {
+    if (txtUsername && txtPassword && txtName && txtPhone && txtEmail) {
       const account = {
-        username: username,
-        password: password,
-        name: name,
-        phone: phone,
-        email: email
+        username: txtUsername,
+        password: txtPassword,
+        name: txtName,
+        phone: txtPhone,
+        email: txtEmail
       };
-
       this.apiSignup(account);
     } else {
-      alert('Please input username and password and name and phone and email');
+      alert('Please fill in all information fields.');
     }
   }
 
-  // apis
   apiSignup(account) {
     axios.post('/api/customer/signup', account).then((res) => {
       const result = res.data;
