@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
 import withRouter from '../utils/withRouter';
+import './Login.css'; // nếu dùng file CSS riêng
 
 class Login extends Component {
   static contextType = MyContext; // access global state
@@ -18,51 +19,46 @@ class Login extends Component {
     const { txtUsername, txtPassword } = this.state;
 
     return (
-      <div className="align-center">
-        <h2 className="text-center">CUSTOMER LOGIN</h2>
+      <div className="login-container">
+        <div className="login-box">
+          <h2 className="login-title">CUSTOMER LOGIN</h2>
 
-        <form>
-          <table className="align-center">
-            <tbody>
-              <tr>
-                <td>Username</td>
-                <td>
-                  <input
-                    type="text"
-                    value={txtUsername}
-                    onChange={(e) =>
-                      this.setState({ txtUsername: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+          <form className="login-form">
+            <div className="form-group">
+              <label>Username</label>
+              <input
+                type="text"
+                value={txtUsername}
+                onChange={(e) =>
+                  this.setState({ txtUsername: e.target.value })
+                }
+                className="form-input"
+              />
+            </div>
 
-              <tr>
-                <td>Password</td>
-                <td>
-                  <input
-                    type="password"
-                    value={txtPassword}
-                    onChange={(e) =>
-                      this.setState({ txtPassword: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                value={txtPassword}
+                onChange={(e) =>
+                  this.setState({ txtPassword: e.target.value })
+                }
+                className="form-input"
+              />
+            </div>
 
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    type="submit"
-                    value="LOGIN"
-                    onClick={(e) => this.btnLoginClick(e)}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
+            <div className="form-group">
+              <button
+                type="submit"
+                onClick={(e) => this.btnLoginClick(e)}
+                className="login-btn"
+              >
+                LOGIN
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }
