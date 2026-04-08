@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import withRouter from '../utils/withRouter';
 import MyContext from '../contexts/MyContext';
+import './ProductDetail.css'; // Import file CSS mới
 
 class ProductDetail extends Component {
   static contextType = MyContext;
@@ -19,81 +20,59 @@ class ProductDetail extends Component {
 
     if (product != null) {
       return (
-        <div className="align-center">
-          <h2 className="text-center">PRODUCT DETAILS</h2>
+        <div className="product-detail-container">
+          <div className="product-detail-card">
+            {/* LEFT: IMAGE */}
+            <div className="product-image-section">
+              <img
+                src={"data:image/jpg;base64," + product.image}
+                alt={product.name}
+                className="main-product-img"
+              />
+            </div>
 
-          <figure className="caption-right">
-            <img
-              src={"data:image/jpg;base64," + product.image}
-              width="400px"
-              height="400px"
-              alt=""
-            />
+            {/* RIGHT: INFO */}
+            <div className="product-info-section">
+              <span className="product-category-tag">{product.category.name}</span>
+              <h2 className="product-name-display">{product.name}</h2>
+              <p className="product-id-text">ID: {product._id}</p>
+              
+              <div className="product-price-display">
+                {product.price.toLocaleString()} <span className="currency">đ</span>
+              </div>
 
-            <figcaption>
-              <form>
-                <table>
-                  <tbody>
+              <hr className="divider" />
 
-                    {/* PRODUCT INFO */}
-                    <tr>
-                      <td align="right">ID:</td>
-                      <td>{product._id}</td>
-                    </tr>
+              <div className="purchase-controls">
+                <div className="quantity-wrapper">
+                  <label>Quantity:</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="99"
+                    className="quantity-input"
+                    value={txtQuantity}
+                    onChange={(e) =>
+                      this.setState({
+                        txtQuantity: parseInt(e.target.value) || 1
+                      })
+                    }
+                  />
+                </div>
 
-                    <tr>
-                      <td align="right">Name:</td>
-                      <td>{product.name}</td>
-                    </tr>
-
-                    <tr>
-                      <td align="right">Price:</td>
-                      <td>{product.price}</td>
-                    </tr>
-
-                    <tr>
-                      <td align="right">Category:</td>
-                      <td>{product.category.name}</td>
-                    </tr>
-
-                    {/* QUANTITY */}
-                    <tr>
-                      <td align="right">Quantity:</td>
-                      <td>
-                        <input
-                          type="number"
-                          min="1"
-                          max="99"
-                          value={txtQuantity}
-                          onChange={(e) =>
-                            this.setState({
-                              txtQuantity: parseInt(e.target.value) || 1
-                            })
-                          }
-                        />
-                      </td>
-                    </tr>
-
-                    {/* BUTTON */}
-                    <tr>
-                      <td></td>
-                      <td>
-                        <button onClick={(e) => this.btnAdd2CartClick(e)}>
-                          ADD TO CART
-                        </button>
-                      </td>
-                    </tr>
-
-                  </tbody>
-                </table>
-              </form>
-            </figcaption>
-          </figure>
+                <button className="btn-add-to-cart" onClick={(e) => this.btnAdd2CartClick(e)}>
+                  <i className="fa fa-shopping-basket"></i> ADD TO BASKET
+                </button>
+              </div>
+              
+              <p className="product-note">✨ Freshly baked daily with love and premium ingredients.</p>
+            </div>
+          </div>
         </div>
       );
     }
 
-    return <div />;
+    return <div className="loading-spinner">Loading deliciousness...</div>;
   }
 
   componentDidMount() {
@@ -101,46 +80,33 @@ class ProductDetail extends Component {
     this.apiGetProduct(params.id);
   }
 
-  // API
   apiGetProduct(id) {
     axios.get('/api/customer/products/' + id).then((res) => {
       this.setState({ product: res.data });
     });
   }
 
-  // EVENT HANDLER
   btnAdd2CartClick(e) {
     e.preventDefault();
-
     const { product, txtQuantity } = this.state;
     const quantity = parseInt(txtQuantity);
 
-    // validate
     if (!quantity || quantity < 1) {
       alert('Please input quantity');
       return;
     }
 
-    // clone cart (tránh mutate trực tiếp)
     const mycart = [...this.context.mycart];
-
-    const index = mycart.findIndex(
-      item => item.product._id === product._id
-    );
+    const index = mycart.findIndex(item => item.product._id === product._id);
 
     if (index === -1) {
-      const newItem = {
-        product: product,
-        quantity: quantity
-      };
-      mycart.push(newItem);
+      mycart.push({ product: product, quantity: quantity });
     } else {
       mycart[index].quantity += quantity;
     }
 
     this.context.setMycart(mycart);
-
-    alert('OK BABY!');
+    alert('Added to your basket! 🥐');
   }
 }
 
