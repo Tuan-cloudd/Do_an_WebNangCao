@@ -36,105 +36,87 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { categories, txtID, txtName, txtPrice, cmbCategory, imgProduct } = this.state;
-    const { item } = this.props;
+  const { categories, txtID, txtName, txtPrice, cmbCategory, imgProduct } = this.state;
 
-    // render danh sách category
-    const categoryOptions = categories.map((cate) => (
-      <option
-        key={cate._id}
-        value={cate._id}
-        selected={item ? cate._id === item.category._id : false}
-      >
-        {cate.name}
-      </option>
-    ));
+  const categoryOptions = categories.map((cate) => (
+    <option key={cate._id} value={cate._id}>{cate.name}</option>
+  ));
 
-    return (
-      <div className="float-right">
-        <h2 className="text-center">PRODUCT DETAIL</h2>
+  return (
+    <div style={styles.container}>
+      <h2 style={styles.title}>PRODUCT DETAILS</h2>
+      
+      <form style={styles.form}>
+        {/* Nhóm ID */}
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Product ID</label>
+          <input 
+            style={{...styles.input, ...styles.readOnly}} 
+            type="text" value={txtID} readOnly 
+          />
+        </div>
 
-        <form>
-          <table>
-            <tbody>
-              <tr>
-                <td>ID</td>
-                <td>
-                  <input
-                    type="text"
-                    value={txtID}
-                    readOnly
-                    onChange={(e) => this.setState({ txtID: e.target.value })}
-                  />
-                </td>
-              </tr>
+        {/* Nhóm Name */}
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Product Name</label>
+          <input 
+            style={styles.input} 
+            type="text" value={txtName} 
+            onChange={(e) => this.setState({ txtName: e.target.value })} 
+          />
+        </div>
 
-              <tr>
-                <td>Name</td>
-                <td>
-                  <input
-                    type="text"
-                    value={txtName}
-                    onChange={(e) => this.setState({ txtName: e.target.value })}
-                  />
-                </td>
-              </tr>
+        {/* Nhóm Price & Category */}
+        <div style={styles.row}>
+          <div style={{...styles.inputGroup, flex: 1, marginRight: '10px'}}>
+            <label style={styles.label}>Price (VNĐ)</label>
+            <input 
+              style={styles.input} 
+              type="number" value={txtPrice} 
+              onChange={(e) => this.setState({ txtPrice: e.target.value })} 
+            />
+          </div>
+          <div style={{...styles.inputGroup, flex: 1}}>
+            <label style={styles.label}>Category</label>
+            <select 
+              style={styles.input} 
+              value={cmbCategory} 
+              onChange={(e) => this.setState({ cmbCategory: e.target.value })}
+            >
+              <option value="">Select Category</option>
+              {categoryOptions}
+            </select>
+          </div>
+        </div>
 
-              <tr>
-                <td>Price</td>
-                <td>
-                  <input
-                    type="text"
-                    value={txtPrice}
-                    onChange={(e) => this.setState({ txtPrice: e.target.value })}
-                  />
-                </td>
-              </tr>
+        {/* Nhóm Image Upload */}
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Product Image</label>
+          <input 
+            type="file" 
+            accept="image/*" 
+            onChange={(e) => this.previewImage(e)} 
+            style={styles.fileInput}
+          />
+          <div style={styles.imagePreviewWrapper}>
+            {imgProduct ? (
+              <img src={imgProduct} style={styles.imagePreview} alt="Preview" />
+            ) : (
+              <div style={styles.imagePlaceholder}>No image selected</div>
+            )}
+          </div>
+        </div>
 
-              <tr>
-                <td>Image</td>
-                <td>
-                  <input
-                    type="file"
-                    name="fileImage"
-                    accept="image/jpeg, image/png, image/gif"
-                    onChange={(e) => this.previewImage(e)}
-                  />
-                </td>
-              </tr>
-
-              <tr>
-                <td>Category</td>
-                <td>
-                  <select
-                    value={cmbCategory}
-                    onChange={(e) => this.setState({ cmbCategory: e.target.value })}
-                  >
-                    {categoryOptions}
-                  </select>
-                </td>
-              </tr>
-
-              <tr>
-                <td></td>
-                <td>
-                  <input type="submit" value="ADD NEW" onClick={(e) => this.btnAddClick(e)} />
-                  <input type="submit" value="UPDATE" onClick={(e) => this.btnUpdateClick(e)} />
-                  <input type="submit" value="DELETE" onClick={(e) => this.btnDeleteClick(e)} />
-                </td>
-              </tr>
-
-              <tr>
-                <td colSpan="2">
-                  <img src={imgProduct} width="300px" height="300px" alt="" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
-      </div>
-    );
-  }
+        {/* Nhóm Buttons */}
+        <div style={styles.buttonGroup}>
+          <button style={styles.btnAdd} onClick={(e) => this.btnAddClick(e)}>ADD NEW</button>
+          <button style={styles.btnUpdate} onClick={(e) => this.btnUpdateClick(e)}>UPDATE</button>
+          <button style={styles.btnDelete} onClick={(e) => this.btnDeleteClick(e)}>DELETE</button>
+        </div>
+      </form>
+    </div>
+  );
+}
 
   // event-handlers
   previewImage(e) {
@@ -321,6 +303,123 @@ apiGetProducts() {
 
 
 }
+const styles = {
+  container: {
+    // Thường chiếm 1/3 trang web
+    padding: '30px',
+    background: '#ffffff',
+    borderRadius: '16px',
+    boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+    marginLeft: '20px',
+    minHeight: '80vh',
+    fontFamily: "'Inter', sans-serif"
+  },
+  title: {
+    fontSize: '20px',
+    fontWeight: '700',
+    color: '#1a1a1a',
+    marginBottom: '25px',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: '1px'
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  inputGroup: {
+    marginBottom: '18px',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  label: {
+    fontSize: '13px',
+    fontWeight: '600',
+    color: '#6c757d',
+    marginBottom: '8px',
+    marginLeft: '4px'
+  },
+  input: {
+    padding: '12px 15px',
+    borderRadius: '10px',
+    border: '1px solid #e1e4e8',
+    fontSize: '14px',
+    outline: 'none',
+    transition: 'all 0.3s ease',
+    background: '#f8f9fa'
+  },
+  readOnly: {
+    background: '#e9ecef',
+    color: '#adb5bd',
+    cursor: 'not-allowed'
+  },
+  fileInput: {
+    fontSize: '13px',
+    marginBottom: '10px'
+  },
+  imagePreviewWrapper: {
+    width: '100%',
+    height: '250px',
+    borderRadius: '12px',
+    border: '2px dashed #d1d5db',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    background: '#fdfdfd'
+  },
+  imagePreview: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain'
+  },
+  imagePlaceholder: {
+    color: '#9ca3af',
+    fontSize: '14px'
+  },
+  buttonGroup: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '20px'
+  },
+  btnAdd: {
+    flex: 1,
+    padding: '12px',
+    borderRadius: '8px',
+    border: 'none',
+    background: '#007bff',
+    color: '#fff',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: '0.3s'
+  },
+  btnUpdate: {
+    flex: 1,
+    padding: '12px',
+    borderRadius: '8px',
+    border: 'none',
+    background: '#28a745',
+    color: '#fff',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: '0.3s'
+  },
+  btnDelete: {
+    flex: 1,
+    padding: '12px',
+    borderRadius: '8px',
+    border: 'none',
+    background: '#dc3545',
+    color: '#fff',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: '0.3s'
+  }
+};
 
 
 
