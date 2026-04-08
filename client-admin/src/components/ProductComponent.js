@@ -4,7 +4,7 @@ import MyContext from '../contexts/MyContext';
 import ProductDetail from './ProductDetailComponent';
 
 class Product extends Component {
-  static contextType = MyContext; // dùng this.context để truy cập global state
+  static contextType = MyContext;
 
   constructor(props) {
     super(props);
@@ -23,11 +23,10 @@ class Product extends Component {
   render() {
     const { products, noPages, curPage, itemSelected } = this.state;
 
-    // render danh sách sản phẩm
     const productRows = products.map((item) => (
       <tr
         key={item._id}
-        className="datatable"
+        style={styles.row}
         onClick={() => this.trItemClick(item)}
       >
         <td>{item._id}</td>
@@ -35,30 +34,27 @@ class Product extends Component {
         <td>{item.price}</td>
         <td>{new Date(item.cdate).toLocaleString()}</td>
         <td>{item.category?.name || 'N/A'}</td>
-
         <td>
           <img
             src={`data:image/jpg;base64,${item.image}`}
-            width="100px"
-            height="100px"
+            style={styles.img}
             alt=""
           />
         </td>
       </tr>
     ));
 
-    // render phân trang
     const pagination = Array.from({ length: noPages }, (_, index) => {
       const page = index + 1;
       if (page === curPage) {
         return (
-          <span key={index}>| <b>{page}</b> |</span>
+          <span key={index} style={styles.activePage}>| <b>{page}</b> |</span>
         );
       }
       return (
         <span
           key={index}
-          className="link"
+          style={styles.pageLink}
           onClick={() => this.lnkPageClick(page)}
         >
           | {page} |
@@ -67,13 +63,12 @@ class Product extends Component {
     });
 
     return (
-      <div>
-        <div className="float-left">
-          <h2 className="text-center">PRODUCT LIST</h2>
-
-          <table className="datatable" border="1">
-            <tbody>
-              <tr className="datatable">
+      <div style={styles.container}>
+        <div style={styles.leftPanel}>
+          <h2 style={styles.title}>PRODUCT LIST</h2>
+          <table style={styles.table}>
+            <thead>
+              <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Price</th>
@@ -81,29 +76,33 @@ class Product extends Component {
                 <th>Category</th>
                 <th>Image</th>
               </tr>
-
+            </thead>
+            <tbody>
               {productRows}
-
               <tr>
-                <td colSpan="6">{pagination}</td>
+                <td colSpan="6" style={styles.pagination}>
+                  {pagination}
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <div className="inline" />
-        {/* <ProductDetail item={itemSelected} /> */}
-         <ProductDetail item={this.state.itemSelected} curPage={this.state.curPage}
-            updateProducts={this.updateProducts} />
-        <div className="float-clear" />
+        <div style={styles.rightPanel}>
+          <ProductDetail
+            item={itemSelected}
+            curPage={curPage}
+            updateProducts={this.updateProducts}
+          />
+        </div>
       </div>
     );
   }
-  updateProducts = (products, noPages) => { // arrow-function
-    this.setState({ products: products, noPages: noPages });
+
+  updateProducts = (products, noPages) => {
+    this.setState({ products, noPages });
   }
 
-  // event-handlers
   lnkPageClick(page) {
     this.apiGetProducts(page);
   }
@@ -112,7 +111,6 @@ class Product extends Component {
     this.setState({ itemSelected: item });
   }
 
-  // apis
   apiGetProducts(page) {
     const config = {
       headers: { 'x-access-token': this.context.token }
@@ -130,5 +128,64 @@ class Product extends Component {
       });
   }
 }
+
+// 🎨 STYLE
+const styles = {
+  container: {
+    display: 'flex',
+    padding: '20px',
+    background: '#f4f6f9',
+    minHeight: '100vh'
+  },
+  leftPanel: {
+    flex: 2,
+    marginRight: '20px',
+    background: '#fff',
+    padding: '20px',
+    borderRadius: '12px',
+    boxShadow: '0 5px 15px rgba(0,0,0,0.1)'
+  },
+  rightPanel: {
+    flex: 1,
+    background: '#fff',
+    padding: '20px',
+    borderRadius: '12px',
+    boxShadow: '0 5px 15px rgba(0,0,0,0.1)'
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: '20px'
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse'
+  },
+  row: {
+    cursor: 'pointer',
+    transition: '0.2s',
+    textAlign: 'center',
+    borderBottom: '1px solid #ddd',
+    padding: '8px'
+  },
+  img: {
+    width: '80px',
+    height: '80px',
+    objectFit: 'cover',
+    borderRadius: '6px'
+  },
+  pagination: {
+    textAlign: 'center',
+    paddingTop: '10px'
+  },
+  pageLink: {
+    cursor: 'pointer',
+    color: '#007bff',
+    margin: '0 5px'
+  },
+  activePage: {
+    color: '#000',
+    margin: '0 5px'
+  }
+};
 
 export default Product;
