@@ -175,61 +175,102 @@ class Order extends Component {
 // 🎨 STYLE
 const styles = {
   container: {
-    padding: '20px',
-    background: '#f5f7fa',
-    minHeight: '100vh'
+    padding: '40px 20px',
+    background: '#f0f2f5', // Màu nền xám nhạt hiện đại
+    minHeight: '100vh',
+    fontFamily: "'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
   },
   card: {
-    background: '#fff',
-    padding: '20px',
-    marginBottom: '20px',
-    borderRadius: '12px',
-    boxShadow: '0 5px 15px rgba(0,0,0,0.1)'
+    background: '#ffffff',
+    padding: '30px',
+    marginBottom: '30px',
+    borderRadius: '16px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+    border: '1px solid #e1e4e8'
   },
   title: {
-    marginBottom: '15px'
+    margin: '0 0 20px 0',
+    fontSize: '24px',
+    fontWeight: '700',
+    color: '#1a1a1a',
+    borderLeft: '5px solid #007bff',
+    paddingLeft: '15px'
   },
   table: {
     width: '100%',
-    borderCollapse: 'collapse'
+    borderCollapse: 'separate',
+    borderSpacing: '0 10px', // Tạo khoảng cách giữa các dòng
+  },
+  // Chỉnh lại header của table
+  headerCell: {
+    textAlign: 'left',
+    padding: '12px 15px',
+    color: '#6c757d',
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    fontSize: '13px',
+    borderBottom: '2px solid #f0f2f5'
   },
   row: {
     cursor: 'pointer',
-    transition: '0.2s'
+    background: '#fff',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 2px 5px rgba(0,0,0,0.02)'
+  },
+  // Thêm style cho từng cell để đồng bộ
+  cell: {
+    padding: '15px',
+    fontSize: '15px',
+    color: '#495057',
+    verticalAlign: 'middle'
   },
   image: {
-    width: '60px',
-    height: '60px',
-    borderRadius: '8px',
-    objectFit: 'cover'
+    width: '70px',
+    height: '70px',
+    borderRadius: '12px',
+    objectFit: 'cover',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
   },
   approveBtn: {
-    background: '#28a745',
+    background: '#2ecc71',
     color: '#fff',
     border: 'none',
-    padding: '5px 10px',
-    marginRight: '5px',
-    borderRadius: '5px',
-    cursor: 'pointer'
+    padding: '8px 16px',
+    marginRight: '8px',
+    borderRadius: '8px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: '0.3s',
+    boxShadow: '0 4px 6px rgba(46, 204, 113, 0.2)'
   },
   cancelBtn: {
-    background: '#dc3545',
+    background: '#e74c3c',
     color: '#fff',
     border: 'none',
-    padding: '5px 10px',
-    borderRadius: '5px',
-    cursor: 'pointer'
+    padding: '8px 16px',
+    borderRadius: '8px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: '0.3s',
+    boxShadow: '0 4px 6px rgba(231, 76, 60, 0.2)'
   },
   status: (status) => ({
-    padding: '4px 8px',
-    borderRadius: '6px',
+    display: 'inline-block',
+    padding: '6px 12px',
+    borderRadius: '20px', // Bo tròn kiểu viên thuốc
+    fontSize: '12px',
+    fontWeight: '700',
+    textAlign: 'center',
+    minWidth: '90px',
     color: '#fff',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
     background:
       status === 'APPROVED'
-        ? '#28a745'
+        ? '#27ae60'
         : status === 'CANCELED'
-        ? '#dc3545'
-        : '#ffc107'
+        ? '#c0392b'
+        : '#f39c12'
   })
 };
 
