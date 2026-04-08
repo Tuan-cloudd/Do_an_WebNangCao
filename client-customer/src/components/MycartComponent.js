@@ -93,36 +93,38 @@ class Mycart extends Component {
     }
   }
 
-  lnkCheckoutClick() {
-    if (window.confirm('Confirm your order?')) {
-      if (this.context.mycart.length > 0) {
-        const total = CartUtil.getTotal(this.context.mycart);
-        const items = this.context.mycart;
-        const customer = this.context.customer;
-        if (customer) {
-          this.apiCheckout(total, items, customer);
-        } else {
-          this.props.navigate('/login');
-        }
-      } else {
-        alert('Cart is empty');
-      }
+  // Sửa lnkCheckoutClick
+lnkCheckoutClick = () => {  // Thêm dấu = và =>
+  if (window.confirm('Confirm your order?')) {
+    const { mycart, customer } = this.context;
+    if (mycart.length > 0 && customer) {
+      const data = {
+        total: CartUtil.getTotal(mycart),
+        items: mycart,
+        customer: customer._id
+      };
+      this.apiCheckout(data); 
+    } else {
+      this.props.navigate('/login');
     }
   }
+}
 
-  apiCheckout(total, items, customer) {
-    const body = { total, items, customer };
-    const config = { headers: { 'x-access-token': this.context.token } };
-    axios.post('/api/customer/checkout', body, config).then((res) => {
+// Sửa apiCheckout
+apiCheckout = (data) => { // Thêm dấu = và =>
+  const config = { headers: { 'x-access-token': this.context.token } };
+  axios.post('/api/customer/checkout', data, config)
+    .then((res) => {
       if (res.data) {
-        alert('Order placed successfully! 🥐');
+        alert('CHECKOUT OK! 🥐');
         this.context.setMycart([]);
-        this.props.navigate('/home');
-      } else {
-        alert('Checkout failed. Please try again.');
       }
+    })
+    .catch((error) => {
+      console.error("Checkout Error:", error);
+      alert("Lỗi hệ thống.");
     });
-  }
+}
 }
 
 export default withRouter(Mycart);

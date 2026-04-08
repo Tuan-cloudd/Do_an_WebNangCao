@@ -124,3 +124,24 @@
   color: #999;
   font-style: italic;
 }
+.btn-checkout-main {
+  background-color: #5d2e1f; /* Màu nâu socola */
+  color: white;
+  padding: 15px 40px;
+  border-radius: 50px; /* Bo tròn kiểu viên kẹo */
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-checkout-main:hover {
+  background-color: #b66a3d; /* Màu caramel khi di chuột */
+  transform: scale(1.05);
+}
+
+.empty-msg {
+  padding: 40px;
+  color: #999;
+  font-style: italic;
+}
