@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './Home.css'; // Đảm bảo bạn tạo file CSS này
+import './Home.css';
 
 class Home extends Component {
   constructor(props) {
@@ -13,51 +13,83 @@ class Home extends Component {
   }
 
   render() {
-    const hotprods = this.state.hotprods.map((item) => {
-      return (
-        <div key={item._id} className="product-card">
-          <Link to={`/product/${item._id}`} className="product-link">
-            <div className="product-image-wrapper">
-              <img
-                src={"data:image/jpg;base64," + item.image}
-                alt={item.name}
-              />
-            </div>
-            <div className="product-info">
-              <h3 className="product-name">{item.name}</h3>
-              <p className="product-description">Lorem ipsum dolor sit amet, consectetuer adipiscing.</p>
-              {/* <span className="product-price">${item.price}</span> */}
-            </div>
-          </Link>
-        </div>
-      );
-    });
+    // 1. Map sản phẩm Hot
+    const hotprodsJSX = this.state.hotprods.map((item) => (
+      <div key={item._id} className="product-card">
+        <Link to={`/product/${item._id}`} className="product-link">
+          <div className="product-image-wrapper">
+            <img 
+              src={item.image ? "data:image/jpg;base64," + item.image : "https://via.placeholder.com/300"} 
+              alt={item.name} 
+              className="product-img"
+            />
+          </div>
+          <div className="product-info">
+            <h3 className="product-name">{item.name}</h3>
+            <p className="product-description">Best seller of the week.</p>
+            <span className="product-price">{item.price.toLocaleString()} đ</span>
+          </div>
+        </Link>
+      </div>
+    ));
+
+    // 2. Map sản phẩm Mới
+    const newprodsJSX = this.state.newprods.map((item) => (
+      <div key={item._id} className="product-card">
+        <Link to={`/product/${item._id}`} className="product-link">
+          <div className="product-image-wrapper">
+            <img 
+              src={item.image ? "data:image/jpg;base64," + item.image : "https://via.placeholder.com/300"} 
+              alt={item.name} 
+              className="product-img"
+            />
+          </div>
+          <div className="product-info">
+            <h3 className="product-name">{item.name}</h3>
+            <span className="product-price">{item.price.toLocaleString()} đ</span>
+          </div>
+        </Link>
+      </div>
+    ));
 
     return (
       <div className="home-container">
         {/* HERO SECTION */}
         <section className="hero-section">
           <div className="hero-content">
-            <h1 className="hero-title">Take a <br/><span>Croissant</span></h1>
+            <h1 className="hero-title">Love<br/><span>Choux</span></h1>
             <p className="hero-text">
-              Lorem ipsum Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam 
-              nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam.
+              Thưởng thức hương vị bánh Pháp tinh tế, giòn tan bên ngoài và mềm mịn bên trong. 
             </p>
-            <button className="btn-checkout">Checkout Now</button>
+            <Link to="/home">
+                <button className="btn-checkout">Shop Now</button>
+            </Link>
           </div>
           <div className="hero-image">
-            <img src="/path-to-your-croissant-hero-image.png" alt="Croissants" />
+            <img 
+              src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=1000" 
+              alt="Beautiful Pastry" 
+            />
           </div>
         </section>
 
-        {/* SIGNATURES SECTION */}
+        {/* NEW ARRIVALS */}
         <section className="signatures-section">
-          <h2 className="section-title">Our Signatures</h2>
+          <h2 className="section-title">New Arrivals</h2>
           <div className="product-grid">
-            {hotprods}
+            {newprodsJSX}
           </div>
         </section>
-      </div>
+
+        {/* BEST SELLERS (Hot) */}
+        <section className="signatures-section">
+          <h2 className="section-title">Signature Treats</h2>
+          <div className="product-grid">
+            {hotprodsJSX}
+          </div>
+        </section>
+      </div> 
+      /* Đã chuyển thẻ đóng xuống cuối cùng để bao bọc tất cả section */
     );
   }
 
