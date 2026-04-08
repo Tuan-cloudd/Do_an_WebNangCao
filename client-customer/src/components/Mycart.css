@@ -1,0 +1,126 @@
+.cart-container {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #5d2e1f;
+}
+
+.cart-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-family: serif;
+  margin-bottom: 40px;
+}
+
+.cart-table-wrapper {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cart-table th {
+  background-color: #fdf8f6;
+  padding: 15px;
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.cart-row {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.cart-row td {
+  padding: 20px 15px;
+  vertical-align: middle;
+}
+
+.product-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #f9f9f9;
+}
+
+.p-name {
+  display: block;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.p-cate {
+  color: #b66a3d;
+  font-size: 0.8rem;
+}
+
+.btn-remove {
+  background: transparent;
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-remove:hover {
+  background: #e74c3c;
+  color: white;
+}
+
+/* Summary Section */
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.summary-details {
+  font-size: 1.5rem;
+}
+
+.total-label {
+  margin-right: 15px;
+  color: #777;
+}
+
+.total-value {
+  font-weight: bold;
+  color: #5d2e1f;
+}
+
+.btn-checkout-main {
+  background-color: #b66a3d;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(182, 106, 61, 0.3);
+  transition: transform 0.2s;
+}
+
+.btn-checkout-main:hover {
+  transform: scale(1.05);
+  background-color: #a05a32;
+}
+
+.empty-msg {
+  text-align: center;
+  padding: 50px !important;
+  color: #999;
+  font-style: italic;
+}
