@@ -188,7 +188,7 @@ router.post('/checkout', JwtUtil.checkToken, async function (req, res) {
     cdate: now,
     total: total,
     status: 'PENDING',
-    customer: customer._id,// ✅ chỉ lưu id của customer vào order
+    customer: customer._id.trim(),// ✅ chỉ lưu id của customer vào order
     items: items
   };
 
