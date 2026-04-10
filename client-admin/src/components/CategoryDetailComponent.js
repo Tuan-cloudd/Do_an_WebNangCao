@@ -16,46 +16,47 @@ class CategoryDetail extends Component {
   render() {
     return (
       <div style={styles.container}>
-        <h2 style={styles.title}>CATEGORY DETAIL</h2>
+        <div style={styles.header}>
+          <h2 style={styles.title}>Category Details</h2>
+          <p style={styles.subtitle}>Quản lý thông tin danh mục sản phẩm</p>
+        </div>
 
-        <form>
-          <table style={styles.table}>
-            <tbody>
-              <tr>
-                <td style={styles.label}>ID</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtID}
-                    onChange={(e) => this.setState({ txtID: e.target.value })}
-                    readOnly={true}
-                    style={styles.input}
-                  />
-                </td>
-              </tr>
+        <form style={styles.form}>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Category ID</label>
+            <input
+              type="text"
+              value={this.state.txtID}
+              onChange={(e) => this.setState({ txtID: e.target.value })}
+              readOnly={true}
+              style={styles.inputReadOnly}
+              placeholder="Auto-generated ID"
+            />
+          </div>
 
-              <tr>
-                <td style={styles.label}>Name</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtName}
-                    onChange={(e) => this.setState({ txtName: e.target.value })}
-                    style={styles.input}
-                  />
-                </td>
-              </tr>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Category Name</label>
+            <input
+              type="text"
+              value={this.state.txtName}
+              onChange={(e) => this.setState({ txtName: e.target.value })}
+              style={styles.input}
+              placeholder="Enter category name..."
+            />
+          </div>
 
-              <tr>
-                <td></td>
-                <td>
-                  <button style={styles.addBtn} onClick={(e) => this.btnAddClick(e)}>ADD NEW</button>
-                  <button style={styles.updateBtn} onClick={(e) => this.btnUpdateClick(e)}>UPDATE</button>
-                  <button style={styles.deleteBtn} onClick={(e) => this.btnDeleteClick(e)}>DELETE</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div style={styles.buttonContainer}>
+            <button style={styles.addBtn} onClick={(e) => this.btnAddClick(e)}>
+              Add New
+            </button>
+            <button style={styles.updateBtn} onClick={(e) => this.btnUpdateClick(e)}>
+              Update
+            </button>
+            <div style={styles.divider}></div>
+            <button style={styles.deleteBtn} onClick={(e) => this.btnDeleteClick(e)}>
+              Delete
+            </button>
+          </div>
         </form>
       </div>
     );
@@ -138,62 +139,114 @@ class CategoryDetail extends Component {
   }
 }
 
-// 🎨 STYLE
+// ✨ NÂNG CẤP STYLE SANG TRỌNG
 const styles = {
   container: {
-    background: '#fff',
-    padding: '20px',
-    borderRadius: '12px',
-    boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-    minWidth: '300px'
+    background: '#ffffff',
+    padding: '40px',
+    borderRadius: '20px',
+    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.08)',
+    maxWidth: '450px',
+    margin: '20px auto',
+    fontFamily: "'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+  },
+  header: {
+    marginBottom: '30px',
+    textAlign: 'center',
   },
   title: {
-    textAlign: 'center',
-    marginBottom: '20px'
+    margin: '0',
+    fontSize: '24px',
+    color: '#1a1a1a',
+    fontWeight: '700',
+    letterSpacing: '-0.5px',
   },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse'
+  subtitle: {
+    margin: '5px 0 0',
+    fontSize: '14px',
+    color: '#888',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+  },
+  inputGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
   },
   label: {
-    paddingRight: '10px',
-    fontWeight: 'bold',
-    textAlign: 'right',
-    width: '80px'
+    fontSize: '13px',
+    fontWeight: '600',
+    color: '#444',
+    marginLeft: '4px',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
   },
   input: {
-    width: '100%',
-    padding: '6px 8px',
-    borderRadius: '6px',
-    border: '1px solid #ccc',
-    boxSizing: 'border-box'
+    padding: '12px 16px',
+    borderRadius: '10px',
+    border: '1.5px solid #eee',
+    fontSize: '15px',
+    transition: 'all 0.3s ease',
+    outline: 'none',
+    backgroundColor: '#f9f9f9',
+  },
+  inputReadOnly: {
+    padding: '12px 16px',
+    borderRadius: '10px',
+    border: '1.5px solid #eee',
+    fontSize: '15px',
+    backgroundColor: '#f1f1f1',
+    color: '#777',
+    cursor: 'not-allowed',
+  },
+  buttonContainer: {
+    display: 'flex',
+    gap: '10px',
+    marginTop: '10px',
+    flexWrap: 'wrap',
+  },
+  divider: {
+    width: '1px',
+    backgroundColor: '#eee',
+    margin: '0 5px',
   },
   addBtn: {
-    background: '#007bff',
+    flex: 1,
+    background: '#000', // Đen sang trọng
     color: '#fff',
     border: 'none',
-    padding: '6px 12px',
-    marginRight: '5px',
-    borderRadius: '6px',
-    cursor: 'pointer'
+    padding: '12px',
+    borderRadius: '10px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'transform 0.2s, opacity 0.2s',
   },
   updateBtn: {
-    background: '#28a745',
-    color: '#fff',
+    flex: 1,
+    background: '#f0f0f0',
+    color: '#1a1a1a',
     border: 'none',
-    padding: '6px 12px',
-    marginRight: '5px',
-    borderRadius: '6px',
-    cursor: 'pointer'
+    padding: '12px',
+    borderRadius: '10px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
   },
   deleteBtn: {
-    background: '#dc3545',
-    color: '#fff',
-    border: 'none',
-    padding: '6px 12px',
-    borderRadius: '6px',
-    cursor: 'pointer'
-  }
+    width: '100%',
+    background: '#fff',
+    color: '#ff4d4f',
+    border: '1.5px solid #ff4d4f',
+    padding: '12px',
+    borderRadius: '10px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    marginTop: '10px',
+    transition: 'all 0.2s',
+  },
 };
 
 export default CategoryDetail;
