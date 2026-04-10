@@ -8,7 +8,7 @@ const OrderDAO = {
     return await Models.Order.create(order);
   },
   async selectByCustID(customerId) {
-  const query = { 'customer._id': customerId };
+  const query = { 'customer': customerId};
   const orders = await Models.Order.find(query).exec();
   return orders;
 },
