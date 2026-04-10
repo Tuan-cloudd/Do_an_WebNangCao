@@ -189,7 +189,20 @@ apiGetProducts() {
     .get('/api/admin/products?page=' + this.props.curPage, config)
     .then((res) => {
       const result = res.data;
-      this.props.updateProducts(result.products, result.noPages);
+
+      if (result.products.length !== 0) {
+        this.props.updateProducts(result.products, result.noPages);
+      } else {
+        axios
+          .get(
+            '/api/admin/products?page=' + (this.props.curPage - 1),
+            config
+          )
+          .then((res) => {
+            const result = res.data;
+            this.props.updateProducts(result.products, result.noPages);
+          });
+      }
     });
 }
 
@@ -273,31 +286,7 @@ apiDeleteProduct(id) {
     });
 }
 
-apiGetProducts() {
-  const config = {
-    headers: { 'x-access-token': this.context.token }
-  };
 
-  axios
-    .get('/api/admin/products?page=' + this.props.curPage, config)
-    .then((res) => {
-      const result = res.data;
-
-      if (result.products.length !== 0) {
-        this.props.updateProducts(result.products, result.noPages);
-      } else {
-        axios
-          .get(
-            '/api/admin/products?page=' + (this.props.curPage - 1),
-            config
-          )
-          .then((res) => {
-            const result = res.data;
-            this.props.updateProducts(result.products, result.noPages);
-          });
-      }
-    });
-}
 
 
 
