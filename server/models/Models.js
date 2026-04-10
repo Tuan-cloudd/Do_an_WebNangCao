@@ -36,7 +36,11 @@ _id: mongoose.Schema.Types.ObjectId,
 cdate: Number,
 total: Number,
 status: String,
-customer: CustomerSchema,
+customer: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'Customer',
+  required: true
+},
 items: [ItemSchema]
 }, { versionKey: false });
 // models
