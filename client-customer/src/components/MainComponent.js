@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
 import Menu from './MenuComponent';
 import Inform from './InformComponent';
@@ -11,13 +11,17 @@ import Login from './LoginComponent';
 import Myprofile from './MyprofileComponent';
 import Mycart from './MycartComponent';
 import Myorders from './MyordersComponent';
+import Footer from './FooterComponent';
+import { useLocation } from "react-router-dom";
 
-class Main extends Component {
-  render() {
-    return (
-  <div className="body-customer">
+const Main = () => {
+  const location = useLocation();
+
+  return (
+    <div className="body-customer">
     <Menu />
     <Inform />
+    <div style={{ flex: 1 }}>
     <Routes>
       <Route path='/' element={<Navigate replace to='/home'/>} />
       <Route path='/home' element={<Home />} />
@@ -31,9 +35,14 @@ class Main extends Component {
       <Route path='/mycart' element={<Mycart/>} />
       <Route path='/myorders' element={<Myorders/>} />
     </Routes>
+    </div>
+    {/* Ẩn footer ở login/signup */}
+    {location.pathname !== "/login" && location.pathname !== "/signup" && (
+    <Footer />
+     )}
   </div>
     );
   }
-}
+
 
 export default Main;

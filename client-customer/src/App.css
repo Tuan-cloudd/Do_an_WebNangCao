@@ -151,3 +151,17 @@ tr:not(:first-child):hover.datatable {
   background-color: #dcfcfc;
   cursor: pointer;
 }
+/*  */
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+.body-customer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
