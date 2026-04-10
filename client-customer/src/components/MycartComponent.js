@@ -93,38 +93,49 @@ class Mycart extends Component {
     }
   }
 
-  // Sửa lnkCheckoutClick
-lnkCheckoutClick = () => {  // Thêm dấu = và =>
-  if (window.confirm('Confirm your order?')) {
-    const { mycart, customer } = this.context;
-    if (mycart.length > 0 && customer) {
-      const data = {
-        total: CartUtil.getTotal(mycart),
-        items: mycart,
-        customer: customer._id
-      };
-      this.apiCheckout(data); 
-    } else {
-      this.props.navigate('/login');
+// CHECKOUT
+  lnkCheckoutClick() {
+    if (window.confirm('ARE YOU SURE?')) {
+
+      if (this.context.mycart.length > 0) {
+
+        const total = CartUtil.getTotal(this.context.mycart);
+        const items = this.context.mycart;
+        const customer = this.context.customer;
+
+        if (customer) {
+          this.apiCheckout(total, items, customer);
+        } else {
+          this.props.navigate('/login');
+        }
+
+      } else {
+        alert('Your cart is empty');
+      }
     }
   }
-}
 
-// Sửa apiCheckout
-apiCheckout = (data) => { // Thêm dấu = và =>
-  const config = { headers: { 'x-access-token': this.context.token } };
-  axios.post('/api/customer/checkout', data, config)
-    .then((res) => {
-      if (res.data) {
+  // CALL API
+  apiCheckout(total, items, customer) {
+    const body = { total: total, items: items, customer: customer };
+
+    const config = {
+      headers: { 'x-access-token': this.context.token }
+    };
+
+    axios.post('/api/customer/checkout', body, config).then((res) => {
+      const result = res.data;
+
+      if (result) {
         alert('CHECKOUT OK! 🥐');
         this.context.setMycart([]);
+        this.props.navigate('/home');
+      } else {
+        alert('SORRY BABY!');
       }
-    })
-    .catch((error) => {
-      console.error("Checkout Error:", error);
-      alert("Lỗi hệ thống.");
     });
-}
+  }
+
 }
 
 export default withRouter(Mycart);
