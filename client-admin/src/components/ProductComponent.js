@@ -36,7 +36,7 @@ class Product extends Component {
         >
           <td style={styles.tdId}>{item._id}</td>
           <td style={styles.tdName}>{item.name}</td>
-          <td style={styles.tdPrice}>${item.price.toLocaleString()}</td>
+          <td style={styles.tdPrice}>{item.price.toLocaleString()} VNĐ</td>
           <td style={styles.tdDate}>{new Date(item.cdate).toLocaleDateString()}</td>
           <td style={styles.tdCate}>
             <span style={styles.cateBadge}>{item.category?.name || 'N/A'}</span>
