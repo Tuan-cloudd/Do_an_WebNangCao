@@ -82,3 +82,64 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;
 }
+/* About Section */
+/* ABOUT SECTION */
+.about-section {
+  padding: 80px 10%;
+  background-color: #fffaf5; /* Màu nền kem nhẹ nhàng */
+}
+
+.about-container {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-text p {
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+.about-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.feature-item h4 {
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.feature-item p {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.feature-icon {
+  font-size: 2rem;
+}
+
+.about-img-grid img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 20px;
+  box-shadow: 20px 20px 0px #eec0c0; /* Đổ bóng nghệ thuật */
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .about-features {
+    grid-template-columns: 1fr;
+  }
+}

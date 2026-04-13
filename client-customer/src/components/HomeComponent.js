@@ -54,6 +54,7 @@ class Home extends Component {
 
     return (
       <div className="home-container">
+       
         {/* HERO SECTION */}
         <section className="hero-section">
           <div className="hero-content">
@@ -70,6 +71,35 @@ class Home extends Component {
               src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=1000" 
               alt="Beautiful Pastry" 
             />
+          </div>
+        </section>
+
+         {/* PHẦN GIỚI THIỆU THÊM MỚI */}
+        <section className="about-section">
+          <div className="about-container">
+            <div className="about-text">
+              <h2 className="section-title">Câu Chuyện Của Love Choux</h2>
+              <p>
+                Khởi nguồn từ niềm đam mê với nghệ thuật làm bánh Pháp, <strong>Love Choux</strong> không chỉ bán bánh, 
+                chúng tôi trao gửi những niềm vui ngọt ngào. Mỗi chiếc bánh đều được làm thủ công trong ngày 
+                với nguyên liệu nhập khẩu cao cấp.
+              </p>
+              <div className="about-features">
+                <div className="feature-item">
+                  <span className="feature-icon">🌿</span>
+                  <h4>Nguyên liệu sạch</h4>
+                  <p>100% tự nhiên, không chất bảo quản.</p>
+                </div>
+                <div className="feature-item">
+                  <span className="feature-icon">👨‍🍳</span>
+                  <h4>Làm mới mỗi ngày</h4>
+                  <p>Bánh luôn ra lò tươi mới mỗi sáng.</p>
+                </div>
+              </div>
+            </div>
+            <div className="about-img-grid">
+               <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?q=80&w=500" alt="Baking process" />
+            </div>
           </div>
         </section>
 
@@ -91,6 +121,8 @@ class Home extends Component {
       </div> 
       /* Đã chuyển thẻ đóng xuống cuối cùng để bao bọc tất cả section */
     );
+
+    //  footer 
   }
 
   componentDidMount() {
