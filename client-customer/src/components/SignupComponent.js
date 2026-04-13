@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import './Signup.css'; // Đảm bảo tạo file CSS này
+import '../styles/Signup.css'; 
 
 class Signup extends Component {
   constructor(props) {

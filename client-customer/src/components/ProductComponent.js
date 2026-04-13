@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import withRouter from '../utils/withRouter';
-import './Product.css'; // Import file CSS mới
+import '../styles/Product.css'; // Import file CSS mới
 
 class Product extends Component {
   constructor(props) {

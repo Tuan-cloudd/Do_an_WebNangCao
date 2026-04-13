@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import MyContext from '../contexts/MyContext';
-import './Myorders.css'; // Đảm bảo bạn tạo file CSS này
+import '../styles/Myorders.css'; // Đảm bảo bạn tạo file CSS này
 
 class Myorders extends Component {
   static contextType = MyContext;

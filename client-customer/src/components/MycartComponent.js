@@ -3,7 +3,7 @@ import MyContext from '../contexts/MyContext';
 import CartUtil from '../utils/CartUtil';
 import axios from 'axios';
 import withRouter from '../utils/withRouter';
-import './Mycart.css'; // Import file CSS
+import '../styles/Mycart.css'; // Import file CSS
 
 class Mycart extends Component {
   static contextType = MyContext;

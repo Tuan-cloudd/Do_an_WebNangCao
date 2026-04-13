@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import withRouter from '../utils/withRouter';
 import MyContext from '../contexts/MyContext';
-import './ProductDetail.css'; // Import file CSS mới
+import '../styles/ProductDetail.css'; // Import file CSS mới
 
 class ProductDetail extends Component {
   static contextType = MyContext;

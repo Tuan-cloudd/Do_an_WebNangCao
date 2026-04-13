@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import MyContext from '../contexts/MyContext';
-import './Myprofile.css'; // Import file CSS mới
+import '../styles/Myprofile.css'; // Import file CSS mới
 
 class Myprofile extends Component {
   static contextType = MyContext;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import MyContext from '../contexts/MyContext';
-import './Inform.css'; // Tạo file CSS riêng
+import '../styles/Inform.css'; 
 
 class Inform extends Component {
   static contextType = MyContext;
